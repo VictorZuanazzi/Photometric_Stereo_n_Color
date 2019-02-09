@@ -1,0 +1,25 @@
+function [Images, imNames] = load_all_images(folderPath, extention)
+%Stores in memory all images of a folder.
+%Note: it may also work with
+
+if ~isfolder(folderPath)
+    errorMessage = sprintf('The selected folders was not found: ');
+    uiwait(warnlg(errorMessage));
+    return;
+end
+
+ext = "*." + extention;
+filePattern = fullfile(folderPath, ext);
+files = dir(filePattern);
+
+num_files = length(files);
+imNames = strings(num_files);
+
+for k = 1:num_files
+    imNames(k) = files(k).name;
+    filePath = fullfile(folderPath, imNames(k));
+    Images{k} = imread(filePath); 
+    imshow(Images{k})
+end
+       
+end
