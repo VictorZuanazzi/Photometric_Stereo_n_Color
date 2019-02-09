@@ -1,0 +1,12 @@
+function [imageStack] = stack_images(imagesCell)
+%Stacks up gray images on the third dimention.
+
+n = length(imagesCell);
+[h, w] = size(imagesCell{1});
+imageStack = zeros(h, w, n);
+
+% for i = 1:n
+%     imageStack(:,:,i) = imagesCell{i};
+end
+end
+
