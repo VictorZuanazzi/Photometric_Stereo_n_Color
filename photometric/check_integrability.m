@@ -6,9 +6,11 @@ function [ p, q, SE ] = check_integrability( normals )
 %   SE : Squared Errors of the 2 second derivatives
 
 % initalization
+[h,w,d] = size(normals);
+
 p = zeros(size(normals));
 q = zeros(size(normals));
-SE = zeros(size(normals));
+SE = zeros([h,w]);
 
 % ========================================================================
 % YOUR CODE GOES HERE
