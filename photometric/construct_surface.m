@@ -21,24 +21,38 @@ switch path_type
         % top left corner of height_map is zero
         % for each pixel in the left column of height_map
         %   height_value = previous_height_value + corresponding_q_value
-        height_map(2:h,1) = height_map(1:h-1,1) + q(2:h,1);
+        for y = 2:h
+            height_map(y, 1) = height_map(y-1, 1)+ q(y, 1);
+        end
+        
         
         % for each row
         %   for each element of the row except for leftmost
-        %       height_value = previous_height_value + corresponding_p_value      
-        height_map(:,2:w) = height_map(:,1:w-1) + p(:,2:w);
+        %       height_value = previous_height_value + corresponding_p_value  
+        for y = 1:h
+            for x = 2:w
+                height_map(y, x) = height_map(y, x-1)+p(y, x);
+            end
+        end
+        
                     
     case 'row'
         % top left corner of height_map is zero
         % for each pixel in the top row of height_map
         %   height_value = previous_height_value + corresponding_p_value
-        height_map(1,2:w) = height_map(1,1:w-1) + p(1,2:w);
+        for x = 2:w
+            height_map(1, x) = height_map(1, x-1)+p(1, x);
+        end
         
         % for each columns
         %   for each element of the columns except for top one
-        %       height_value = previous_height_value + corresponding_q_value      
-        height_map(2:h,:) = height_map(1:h-1,:) + q(2:h,:);
-        
+        %       height_value = previous_height_value + corresponding_q_value
+        for x = 1:w
+            for y = 2:h
+                height_map(y, x) = height_map(y-1, x)+q(y, x);
+            end
+        end
+
     case 'average'
         %height_map by row
         row_height_map = construct_surface( p, q, 'row' );
