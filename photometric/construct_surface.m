@@ -42,11 +42,22 @@ switch path_type
     case 'average'
         %height_map by row
         row_height_map = construct_surface( p, q, 'row' );
+        
+        %height_map by row
+        column_height_map = construct_surface( p, q, 'column' );
+
+        %average of the two
+        height_map = (row_height_map + column_height_map) / 2;
+        
+    case 'm_average'
+        %height_map by row
+        row_height_map = construct_surface( p, q, 'row' );
+        
         %height_map by row
         column_height_map = construct_surface( p, q, 'column' );
         
-        %average of the two
-        height_map = (row_height_map + column_height_map) / 2;
+        %harmonic average of the two
+        height_map = (row_height_map + column_height_map + mean(column_height_map, 'all') + mean(row_height_map, 'all'))/4;
         
 end
 
