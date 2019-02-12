@@ -15,8 +15,8 @@ SE = zeros([h,w]);
 % ========================================================================
 % Compute p and q, where
 % p measures value of df / dx
-p = normals(:,:,1)./normals(:,:,3);
-q = normals(:,:,2)./normals(:,:,3);
+p = normals(:,:,1) ./ normals(:,:,3);
+q = normals(:,:,2) ./ normals(:,:,3);
 % q measures value of df / dy
 
 p(isnan(p)) = 0;
@@ -34,8 +34,11 @@ p_y1 = p(:,1);
 q_x1 = q(1,:);
 
 %approximate derivatives
-dpdy = diff([p_y1 p], 1, 2); 
-dqdx = diff([q_x1; q], 1, 1); 
+[~, dpdy] = gradient(p);
+[dqdx, ~] = gradient(q);
+
+%dpdy = diff([p_y1 p], 1, 2); 
+%dqdx = diff([q_x1; q], 1, 1); 
 
 %dpdy(:,2:end) = p(:,1:end-1) - p(:,2:end); 
 %dqdx(2:end,:) = q(1:end-1,:) - q(2:end,:);
