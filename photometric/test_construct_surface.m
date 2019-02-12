@@ -1,3 +1,5 @@
+
+
 close all
 clear all
 clc
@@ -15,7 +17,7 @@ fprintf('Finish loading %d images.\n\n', n);
 
 % compute the surface gradient from the stack of imgs and light source mat
 disp('Computing surface albedo and normal map...')
-[albedo, normals] = estimate_alb_nrm(image_stack, scriptV);
+[albedo, normals] = estimate_alb_nrm(image_stack, scriptV, false);
 
 
 %% integrability check: is (dp / dy  -  dq / dx) ^ 2 small everywhere?
@@ -27,16 +29,16 @@ SE(SE <= threshold) = NaN; % for good visualization
 fprintf('Number of outliers: %d\n\n', sum(sum(SE > threshold)));
 
 %% compute the surface height
-height_map_row = construct_surface( p, q, 'row' );
-height_map_col = construct_surface( p, q, 'column' );
+height_map_col = construct_surface( p, q, 'column');
+height_map_row = construct_surface( p, q, 'row');
 height_map_ave = construct_surface( p, q, 'average' );
-height_map_har = construct_surface( p, q, 'm_average');
+height_map_har = construct_surface( p, q, 'harmonic');
 
 
 %% Display
 show_results(albedo, normals, SE);
-show_model(albedo, height_map_row);
 show_model(albedo, height_map_col);
+show_model(albedo, height_map_row);
 show_model(albedo, height_map_ave);
 show_model(albedo, height_map_har);
 
@@ -45,7 +47,7 @@ show_model(albedo, height_map_har);
 [h, w, n] = size(image_stack);
 fprintf('Finish loading %d images.\n\n', n);
 disp('Computing surface albedo and normal map...')
-[albedo, normals] = estimate_alb_nrm(image_stack, scriptV);
+[albedo, normals] = estimate_alb_nrm(image_stack, scriptV, true);
 
 %% integrability check: is (dp / dy  -  dq / dx) ^ 2 small everywhere?
 disp('Integrability checking')
@@ -56,14 +58,14 @@ SE(SE <= threshold) = NaN; % for good visualization
 fprintf('Number of outliers: %d\n\n', sum(sum(SE > threshold)));
 
 %% compute the surface height
-height_map_row = construct_surface( p, q, 'row' );
-height_map_col = construct_surface( p, q, 'column' );
+height_map_col = construct_surface( p, q, 'column');
+height_map_row = construct_surface( p, q, 'row');
 height_map_ave = construct_surface( p, q, 'average' );
-height_map_har = construct_surface( p, q, 'm_average' );
+height_map_har = construct_surface( p, q, 'harmonic' );
 
 show_results(albedo, normals, SE);
-show_model(albedo, height_map_row);
 show_model(albedo, height_map_col);
-show_model(albedo, height_map_ave);
-show_model(albedo, height_map_har);
+show_model(albedo, height_map_row);
+% show_model(albedo, height_map_ave);
+% show_model(albedo, height_map_har);
 
