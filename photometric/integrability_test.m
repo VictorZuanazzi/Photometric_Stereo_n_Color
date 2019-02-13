@@ -10,20 +10,21 @@ disp('Loading images...')
 %image_dir = './photometrics_images/MonkeyGray/';
 %image_ext = '*.png';
 
-image_dir = ["./photometrics_images/SphereGray25/";"./photometrics_images/MonkeyGray/";"./photometrics_images/yaleB02/"];
-label = ["Sphere", "Monkey", "Face"];
+image_dir = ["./photometrics_images/SphereGray25/"; "./photometrics_images/yaleB02/"; "./photometrics_images/MonkeyGray/"];
+label = ["Sphere"; "Face"; "Monkey"];
+
 
 num_runs = 5;
 
 w_bar = waitbar(0, 'work hard, play hard'); %progress bar
-
-for k = 1:3
+fig1 = figure();
+for k = 1:length(label)
     if (label(k) == "Face")
         [image_stack, scriptV] = load_face_images('./photometrics_images/yaleB02/');
     else
         [image_stack, scriptV] = load_syn_images(image_dir(k));
     end
-
+    
     [h, w, n] = size(image_stack);
     fprintf('Finish loading %d images.\n\n', n);   
 
@@ -43,7 +44,7 @@ for k = 1:3
             %% integrability check: is (dp / dy  -  dq / dx) ^ 2 small everywhere?
             disp('Integrability checking')
             [p, q, se_i(:,:,idx)] = check_integrability(normals);
-            waitbar(count/(n*num_runs*3), w_bar); 
+            waitbar(count/(n*num_runs*length(label)), w_bar); 
             count = count +1;
         end
         SE{k} = mean(se_i, 3);
@@ -53,16 +54,16 @@ for k = 1:3
         fprintf('Number of outliers: %d\n\n', total_SE(k));
     end
     
-
-    fig1 = figure();
-    plt(k) = plot(total_SE)
+    plt(k) = plot(total_SE/(h * w))
     hold on;
 end
 
-legend(plt, label);
-title('number of SE outliers per batch', 'FontSize', 20)
-xlabel('Number of images (batch)', 'FontSize', 20)
-ylabel('Number of outliers', 'FontSize', 20)
+legend(label);
+title('normalized number of SE outliers', 'FontSize', 10);
+xlabel('Number of images (batch)', 'FontSize', 10);
+ylabel('Number of outliers per pixel', 'FontSize', 10);
+hold off;
+
 close(w_bar)
 %% compute the surface height
 height_map = construct_surface( p, q );
