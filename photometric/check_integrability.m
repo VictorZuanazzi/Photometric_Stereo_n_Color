@@ -31,7 +31,7 @@ dpdy = zeros([h,w]);
 dqdx = zeros([h,w]);
 dpdy(:,2:end) = p(:,1:end-1) - p(:,2:end);
 dqdx(2:end,:) = q(1:end-1,:) - q(2:end,:);
-SE = (dpdy - dqdx)^2;
+SE = (dpdy - dqdx).^2;
 % ========================================================================
 end
 
