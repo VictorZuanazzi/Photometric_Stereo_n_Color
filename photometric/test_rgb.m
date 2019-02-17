@@ -6,7 +6,7 @@ disp('Part 1: Photometric Stereo')
 
 % obtain many images in a fixed view under different illumination
 disp('Loading images...')
-image_dir = './photometrics_images/SphereColor/';
+image_dir = './photometrics_images/MonkeyColor/';
 %image_ext = '*.png';
 
 % shadow trick
@@ -38,7 +38,7 @@ end
 
 stacks(isnan(stacks)) = 0;
 grayScale = 0.2989 * stacks(:,:,:,1) + 0.5870 * stacks(:,:,:,2) + 0.1140 * stacks(:,:,:,3);
-[~, normals] = estimate_alb_nrm(grayScale, scriptV, shadow_trick);
+[albedo, normals] = estimate_alb_nrm(grayScale, scriptV, shadow_trick);
 
 %% integrability check: is (dp / dy  -  dq / dx) ^ 2 small everywhere?
 disp('Integrability checking')
@@ -55,4 +55,4 @@ height_map = construct_surface( p, q );
 % show_results(rgb_albedo(:,:,2), rgb_normals(:,:,:,2), SE);
 % show_results(rgb_albedo(:,:,3), rgb_normals(:,:,:,3), SE);
 show_results(rgb_albedo, normals, SE);
-show_model(rgb_albedo, height_map);
+show_model(albedo, height_map);
