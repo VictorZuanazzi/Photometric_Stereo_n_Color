@@ -63,7 +63,7 @@ end
 legend(label);
 title('number of SE outliers', 'FontSize', 10);
 xlabel('Number of images (batch)', 'FontSize', 10);
-ylabel('Number of outliers per pixel', 'FontSize', 10);
+ylabel('Number of outliers', 'FontSize', 10);
 hold off;
 
 close(w_bar)
