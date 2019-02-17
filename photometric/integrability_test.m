@@ -5,7 +5,7 @@ clc
 disp('Part 1: Photometric Stereo')
 
 % obtain many images in a fixed view under different illumination
-disp('Loading images...')
+
 %image_dir = './photometrics_images/SphereGray25/';
 %image_dir = './photometrics_images/MonkeyGray/';
 %image_ext = '*.png';
@@ -13,16 +13,18 @@ disp('Loading images...')
 image_dir = ["./photometrics_images/SphereGray25/"; "./photometrics_images/yaleB02/"; "./photometrics_images/MonkeyGray/"];
 label = ["Sphere"; "Face"; "Monkey"];
 
-
 num_runs = 5;
 
-w_bar = waitbar(0, 'work hard, play hard'); %progress bar
 fig1 = figure();
-for k = 1:length(label)
-    if (label(k) == "Face")
+w_bar = waitbar(0, 'work hard, play hard'); %progress bar
+
+for l = 1:length(label)
+    
+    disp('Loading images...')
+    if (label(l) == "Face")
         [image_stack, scriptV] = load_face_images('./photometrics_images/yaleB02/');
     else
-        [image_stack, scriptV] = load_syn_images(image_dir(k));
+        [image_stack, scriptV] = load_syn_images(image_dir(l));
     end
     
     [h, w, n] = size(image_stack);
@@ -54,12 +56,12 @@ for k = 1:length(label)
         fprintf('Number of outliers: %d\n\n', total_SE(k));
     end
     
-    plt(k) = plot(total_SE/(h * w))
+    plt(k) = plot(total_SE);
     hold on;
 end
 
 legend(label);
-title('normalized number of SE outliers', 'FontSize', 10);
+title('number of SE outliers', 'FontSize', 10);
 xlabel('Number of images (batch)', 'FontSize', 10);
 ylabel('Number of outliers per pixel', 'FontSize', 10);
 hold off;
