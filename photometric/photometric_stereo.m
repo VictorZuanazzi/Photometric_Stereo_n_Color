@@ -32,7 +32,7 @@ height_map = construct_surface( p, q );
 %% Display
 show_results(albedo, normals, SE);
 show_model(albedo, height_map);
-
+display_normal_vectors(height_map, p, q)
 
 %% Face
 [image_stack, scriptV] = load_face_images('./photometrics_images/yaleB02/');
@@ -54,4 +54,5 @@ height_map = construct_surface( p, q );
 
 show_results(albedo, normals, SE);
 show_model(albedo, height_map);
+display_normal_vectors(height_map, p, q)
 
