@@ -1,4 +1,4 @@
-function [corrected]= GrayWorld(filename)
+function GrayWorld(filename)
 
 im = imread(filename);
 
