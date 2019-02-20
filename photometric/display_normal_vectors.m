@@ -1,5 +1,4 @@
 function [] = display_normal_vectors(height_map, p, q)
-%surf(height_map);\
     
 s = 9;
 [w, h, ~] = size(height_map);
