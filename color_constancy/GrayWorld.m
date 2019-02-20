@@ -20,7 +20,6 @@ im_awb(:,:,1)=128/255.*im(:,:,1)/avg_dim1;
 im_awb(:,:,2)=128/255.*im(:,:,2)/avg_dim2;
 im_awb(:,:,3)=128/255.*im(:,:,3)/avg_dim3;
 
-
 figure(2);
 imshow(im_awb);
 title('Gray World Corrected Image');
